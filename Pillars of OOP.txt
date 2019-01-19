@@ -1,0 +1,13 @@
+1) Abstraction:- (high level view of software system)
+defining class/interface
+class=> template/blueprint to create object
+object=> one specific instance of class
+
+2) Encapsulation:- 
+only owner of data should be able to modify it(mutate)
+data private & give access to data 
+
+3) Inheritance:-
+
+
+4)Polymorphism:-
