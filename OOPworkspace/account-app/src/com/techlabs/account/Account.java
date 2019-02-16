@@ -37,4 +37,26 @@ public class Account {
 	public static int getTransactionCount() {
 		return transactionCount;
 	}
+	@Override
+	public String toString() {
+		//return 1;
+		//System.out.println(super.toString());
+		return super.toString()+ "\n accno:" + accno + ", name:" + name 
+				+ ", balance:" + balance;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+	          return true;
+	     }
+	     if (obj == null) { 
+	         return false;
+	     }
+	     if (getClass() != obj.getClass()) {
+	          return false;
+	     }
+	     Account other = (Account) obj;
+	     return (this.accno == other.accno && this.name.equals(other.name)
+	    		 && this.balance == other.balance);
+	}
 }
