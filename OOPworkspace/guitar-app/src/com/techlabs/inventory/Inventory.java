@@ -31,27 +31,10 @@ public class Inventory {
 		for(Iterator i = guitars.iterator(); i.hasNext(); ) {
 			Guitar guitar = (Guitar)i.next();
 			
-			GuitarSpec guitarSpec = guitar.getSpec();
-			if(searchSpec.getBuilder() != guitarSpec.getBuilder()) {
-				continue;
+			if(guitar.getSpec().matches(searchSpec)) {
+				matchingGuitars.add(guitar);
 			}
-			String model = searchSpec.getModel();
-			if((model != null) && (!model.equals("")) && 
-					(!model.equalsIgnoreCase(guitarSpec.getModel()))){
-				continue;
-			}
-			if(searchSpec.getType() != guitarSpec.getType()) {
-				continue;
-			}
-			if(searchSpec.getBackWood() != guitarSpec.getBackWood()) {
-				continue;
-			}
-			if(searchSpec.getTopWood() != guitarSpec.getTopWood()) {
-				continue;
-			}
-			matchingGuitars.add(guitar);
 		}
 		return matchingGuitars;
-	}
-	
+	}	
 }
