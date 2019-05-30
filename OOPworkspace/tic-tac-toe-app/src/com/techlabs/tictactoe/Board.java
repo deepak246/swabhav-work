@@ -10,7 +10,6 @@ public class Board {
 		for(int i = 0; i < 9; i++) {
 			cells[i] = new Cell();
 		}
-		System.out.println("board");
 	}
 	
 	public void setBoardPosition(int position, MarkType mark) {

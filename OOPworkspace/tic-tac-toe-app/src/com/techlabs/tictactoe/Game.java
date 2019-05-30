@@ -12,7 +12,6 @@ public class Game {
 		this.result = result;
 		this.player = player;
 		playerIndex = 0;
-		System.out.println("game");
 	}
 	
 	public Board getBoard() {

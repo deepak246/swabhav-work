@@ -6,7 +6,6 @@ public class ResultAnalyzer {
 	
 	public ResultAnalyzer(Board board) {
 		this.board = board;
-		System.out.println("result");
 	}
 	
 	public ResultType checkResult(MarkType mark) {
