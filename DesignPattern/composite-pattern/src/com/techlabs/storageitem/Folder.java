@@ -9,7 +9,6 @@ public class Folder implements IStorageItem {
 
 	private int level;
 	private static int tempLevel = 0;
-	public static StringBuffer compositeBuilder = new StringBuffer();
 	
 	private String name;
 	private List<IStorageItem> items;
@@ -38,29 +37,31 @@ public class Folder implements IStorageItem {
 	public void addItem(IStorageItem item) {
 		items.add(item);
 	}
+	
+	public List<IStorageItem> getItems() {
+		return items;
+	}
 
 	@Override
 	public void display() {
-		System.out.println(compositeBuilder + name);
-		//TestStorageItem.compositeBuilder.append("   ");
-		
-		int x = 0;
-		for(IStorageItem item: items) {
-			if(item instanceof Folder) {
-				Folder folder = (Folder)item;
-				x = folder.getLevel();
-			}
-			if(tempLevel == x) {
-				item.display();
-			}
-			else {
-				tempLevel++;
-				compositeBuilder.append("   ");
-				item.display();
-			}
-					
+		if(tempLevel > level) {		
+			TestStorageItem.compositeBuilder.setLength(
+					TestStorageItem.compositeBuilder.length() - 5);
+			System.out.println(TestStorageItem.compositeBuilder + "==>" + name);
+		}
+		if(tempLevel <= level) {
+			System.out.println(TestStorageItem.compositeBuilder + "==>" + name);
+			tempLevel++;
+		}
+		TestStorageItem.compositeBuilder.append("     ");
+		for(IStorageItem item: this.getItems()) {
+			item.display();						
 		}
 	}
+		
+		
+		
 }
+
 	
 

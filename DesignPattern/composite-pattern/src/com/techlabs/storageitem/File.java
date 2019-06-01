@@ -29,7 +29,7 @@ public class File implements IStorageItem{
 	@Override
 	public void display() {
 		//System.out.println("File Name:"+name+" size:"+size+" extension:"+extension);
-		System.out.println(Folder.compositeBuilder + name+" "+size);
+		System.out.println(TestStorageItem.compositeBuilder+"==>"+name + " " + size);
 	}
 	
 	
