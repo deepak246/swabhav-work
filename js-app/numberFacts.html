@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<center>
+    <h3>Generate Facts</h3>
+    Enter Number: <input type="number" id="num-input">
+    &nbsp;<button id="submit">Submit</button>
+    <h4 id="msg"></h4>
+</center>
+
+<script>
+    var btn = document.querySelector("#submit");
+    btn.addEventListener('click', function () {
+        var num = document.querySelector("#num-input").value;
+
+        httpGet(num)
+            .then(function (r) {
+                console.log(r);
+                document.querySelector("#msg").innerHTML = r;
+            })
+            .catch(function (e) {
+                //console.log(e);
+                document.querySelector("#msg").innerHTML = e;
+            })
+        console.log(num);
+    })
+
+    function httpGet(num) {
+        return new Promise(function (resolve, reject) {
+            xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.open("GET", "http://numbersapi.com/" + num, true);
+            xmlhttp.send();
+
+            setTimeout(function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    resolve(xmlhttp.responseText);
+                }
+
+                if (xmlhttp.readyState != 4 || xmlhttp.status != 200) {
+                    reject("some problem occured");
+                }
+            }, 1000);
+
+        })
+    }
+
+</script>
+
+</html>

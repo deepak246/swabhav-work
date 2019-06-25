@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <button type="button" id="source">
+        Click Me!!!
+    </button>
+
+</body>
+<script>
+    (function () {
+        let myBtn = document.querySelector("#source");
+        myBtn.addEventListener("click", listener1);
+        myBtn.addEventListener("click", listener2);
+        function listener1() {
+            console.log("listener 1");
+            //document.write("abc");
+        }
+        function listener2() {
+            console.log("listener 2");
+            //document.write("myBtn
+
+        }
+    })();
+
+</script>
+
+</html>

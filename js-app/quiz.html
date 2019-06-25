@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="questionbank.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+</head>
+
+<style>
+    .quizviewer {
+        text-align: center;
+        display: block;
+        height: 400px;
+        width: 700px;
+        border: 1px solid;
+    }
+
+    .questions {
+        float: left;
+    }
+
+    #startbtn {
+        display: block;
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    #nextbtn {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        display: none;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .startdiv {
+        text-align: center;
+        display: block;
+    }
+
+    .nextdiv {
+        text-align: center;
+        display: block;
+    }
+
+    .questiondisplay {
+        display: none;
+        float: left;
+        text-align: left;
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .resultdisplay {
+        display: none;
+    }
+
+    .radiobtn {
+        float: left;
+        text-align: left;
+        padding-left: 30%;
+    }
+</style>
+
+<body>
+
+    <center>
+        <div class="startdiv">
+            <h2>Online Quiz</h2>
+            <a id="startbtn" type="submit">Start</a>
+        </div>
+        <div class="quizviewer">
+            <div class="questiondisplay">
+                <br>
+                <h3><span id="counter"></span></h3>
+                <br>
+                <strong><span id="question"></span></strong><br><br>
+
+                <input type="radio" name="choice" value="0"><span id="option1"></span><br><br>
+                <input type="radio" name="choice" value="1"><span id="option2"></span><br><br>
+                <input type="radio" name="choice" value="2"><span id="option3"></span><br><br>
+                <input type="radio" name="choice" value="3"><span id="option4"></span><br><br>
+
+            </div>
+            <div class="resultdisplay">
+                <h2>Result: You scored <span id="score"></span>/5</h2>
+                <canvas id = "myChart" width="300" height="100"></canvas>
+            </div>
+        </div>
+        <div class="nextdiv">
+
+            <a id="nextbtn" type="submit">Next</a>
+        </div>
+    </center>
+</body>
+
+<script>
+    var count = 0;
+    var actualAns;
+    var userScore = 0;
+
+    document.querySelector("#startbtn").addEventListener('click', function () {
+        this.style.display = "none";
+        document.querySelector("#nextbtn").style.display = "inline-block";
+        document.querySelector(".questiondisplay").style.display = "block";
+        questionChange();
+    })
+
+    function questionChange() {
+        count++;
+        document.querySelector("#counter").innerHTML = "Question " + count + " of 5";
+        if (count <= 5) {
+            var question = questions.random(questions.length);
+            document.querySelector("#question").innerHTML = "Q: " + question.text;
+            document.querySelector("#option1").innerHTML = question.options[0];
+            document.querySelector("#option2").innerHTML = question.options[1];
+            document.querySelector("#option3").innerHTML = question.options[2];
+            document.querySelector("#option4").innerHTML = question.options[3];
+            actualAns = question.answer;
+            console.log("actual answer: " + actualAns);
+            for (var i = 0; i < questions.length; i++) {
+                if (questions[i] === question) {
+                    questions.splice(i, 1);
+                }
+            }
+            if(count==5){
+                this.innerHTML = "Submit";
+            }
+            return;
+        }
+        if (count > 5) {
+            this.style.display = "none";
+            document.querySelector(".questiondisplay").style.display = "none";
+            document.querySelector(".resultdisplay").style.display = "block";
+            resultdisplay();
+        }
+    }
+
+    function resultCheck() {
+        var userAns;
+        var radios = document.getElementsByName('choice');
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                userAns = radios[i].value;
+                radios[i].checked= false;
+                console.log("user ans: " + userAns);
+                break;
+            }
+        }
+        if (userAns == actualAns) {
+            userScore++;
+        }
+        console.log("Score = " + userScore);
+    }
+
+    function resultdisplay(){
+        document.querySelector("#score").innerHTML = userScore;
+        let myChart = document.getElementById('myChart').getContext('2d');
+            var wrongAns = 5 - userScore;
+            let pieChart = new Chart(myChart,{
+                type:'pie',
+                data: {
+                    labels:['Correct Answer','Wrong Answer'],
+                    datasets:[{
+                        data:[
+                            userScore,
+                            wrongAns
+                        ],
+                        backgroundColor:[
+                            "green",
+                            "red"
+                        ]
+                    }]
+                },
+                options: {
+
+                }
+            })
+
+    }
+
+    var element = document.querySelector("#nextbtn");
+    element.addEventListener('click', resultCheck);
+    element.addEventListener('click', questionChange);
+
+</script>
+
+</html>

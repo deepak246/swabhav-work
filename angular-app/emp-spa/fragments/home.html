@@ -1,0 +1,38 @@
+<center>
+    <br><br>
+    <div style="height: 500px; width: 1200px">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Salary</th>
+                    <th>Date of Joining</th>
+                    <th>Designation</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='emp in empList'>
+                    <td>{{emp.name}}</td>
+                    <td>{{emp.salary}}</td>
+                    <td>{{emp.doj}}</td>
+                    <td>{{emp.designation}}</td>
+                    <td>
+                        <a href="#!/edit{{$index}}" ng-disabled="!loginStatus">
+                            <button ng-disabled="!loginStatus" class="btn btn-warning glyphicon glyphicon-pencil">  
+                            </button>
+                        </a>
+
+                    </td>
+                    <td>
+                        <button class="btn btn-danger glyphicon glyphicon-trash" ng-disabled="!loginStatus"
+                            ng-click="deleteClicked($index)">
+
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</center>

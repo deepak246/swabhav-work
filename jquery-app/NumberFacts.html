@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="jquery-3.4.1.js"></script>
+</head>
+
+<script>
+
+    let factStorageArray = [];
+    
+    Storage.prototype.getArray = function (arrayName) {
+        var thisArray = [];
+        var fetchArrayObject = this.getItem(arrayName);
+        if (typeof fetchArrayObject !== 'undefined') {
+            if (fetchArrayObject !== null) { 
+                thisArray = JSON.parse(fetchArrayObject); 
+            }
+        }
+        return thisArray;
+    }
+
+    Storage.prototype.pushArrayItem = function (arrayName, arrayItem) {
+        var existingArray = this.getArray(arrayName);
+        existingArray.push(arrayItem);
+        this.setItem(arrayName, JSON.stringify(existingArray));
+    }
+
+    $(document).ready(() => {
+        displayFacts();
+        $("#submit").click(() => {
+            let num = $("#num-input").val();
+            getFact(num);
+        })
+    });
+
+    function getFact(num) {
+        httpGet(num)
+            .then(function (r) {
+                localStorage.pushArrayItem(factStorageArray,r);
+                displayFacts();
+            })
+            .catch(function (e) {
+                localStorage.pushArrayItem(factStorageArray,e);
+                displayFacts();
+            })
+    }
+
+    function displayFacts(){
+        let factArray = localStorage.getArray(factStorageArray);
+        let facts = "";
+        for(i = factArray.length-1; i >= 0; i--){
+            facts += factArray[i]+"<br>";
+        } 
+        $("#facts").html(facts);
+    }
+
+    function httpGet(num) {
+        return new Promise(function (resolve, reject) {
+            xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.open("GET", "http://numbersapi.com/" + num, true);
+            xmlhttp.send();
+
+            setTimeout(function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    resolve(xmlhttp.responseText);
+                }
+
+                if (xmlhttp.readyState != 4 || xmlhttp.status != 200) {
+                    reject("some problem occured");
+                }
+            }, 1000);
+
+        })
+    }
+</script>
+
+
+<body>
+    <center>
+        <div id="inputs">
+            <h3>Generate Facts</h3>
+            Enter Number: <input type="number" id="num-input">
+            &nbsp;<button id="submit">Submit</button><br>
+            <h3>FACTS</h3>
+        </div>
+
+        <div id="facts">
+
+        </div>
+    </center>
+</body>
+
+
+</html>

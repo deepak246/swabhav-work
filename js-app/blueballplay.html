@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+.wrapper{
+    text-align: right;
+}
+
+.btn{
+        display:block;
+        width:125px;
+        height:125px;
+        line-height:40px;
+        border: 2px solid #f5f5f5;
+        border-radius: 50%;
+        color:#f5f5f5;
+        text-align:center;
+        text-decoration:none;
+        background: #464646;
+        box-shadow: 0 0 3px gray;
+        font-size:20px;
+        font-weight:bold;
+        float: left;
+        background:peru;
+    }
+</style>
+
+<body>
+
+    <div class="wrapper">
+        <h3 id="counter"></h3>
+        <h3 id="attempts"></h3>
+    </div>
+
+    <script>
+        (function(){
+        function countdown(){
+            var seconds = 60;
+            //console.log(seconds);
+            function tick(){
+                var counter = document.querySelector("#counter");
+                seconds--;
+                counter.innerHTML = "Time Remaining = 0:" + (seconds < 10 ? "0" : "") + String(seconds);
+                if(seconds>0){
+                    setTimeout(tick,1000);
+                }
+                else{
+                    alert("Timeout: Game Over");
+                }
+            }
+            tick();
+        }
+        countdown();
+        let remainingAttempts = 5;
+        var attempts = document.querySelector("#attempts");
+        attempts.innerHTML = "Remaining Attempts = " + remainingAttempts;
+        var docFrag = document.createDocumentFragment();
+        for (var i=1; i <= 50 ; i++){
+             var elem = document.createElement('button');
+             elem.setAttribute('id','i');
+             //elem.setAttribute('value','i');
+             elem.setAttribute('class','btn');
+             elem.addEventListener("click",play);
+             elem.innerHTML=i;
+             docFrag.appendChild(elem);
+        }
+        document.body.appendChild(docFrag);
+        let randnum = Math.random();
+        let targetNum = Math.floor((randnum/2)*100) ;
+        console.log(targetNum);
+
+        function play(){
+            var value = this.innerHTML;
+            
+            remainingAttempts--;
+            
+            //console.log(remainingAttempts);
+            //console.log(value);
+            if(value>targetNum){
+                this.style.background = "green";
+            }
+            if(value<targetNum){
+                this.style.background = "red";
+            }
+            if(value==targetNum){
+                this.style.background = "blue";
+                this.innerHTML = "Winner";
+                //alert("YOU WON THE GAME");
+            }
+
+            attempts.innerHTML = "Remaining Attempts = " + remainingAttempts;
+            if(remainingAttempts==0){
+                var elems = document.getElementsByClassName("btn");
+                
+                for(var i = 0; i < elems.length; i++) {
+                    elems[i].disabled = true;
+                }
+                alert("Maximum attempts reached : Game over");
+            }
+        }
+        })();
+</script>
+</body>
+
+</html>

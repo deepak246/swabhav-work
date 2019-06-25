@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<script>
+    let locationHashChanged = function(){
+        if(location.hash === "#placesParagraph"){
+            console.log("you are visitig places content");
+        }
+        if(location.hash === "#historyParagraph"){
+            console.log("you are visitig history content");
+        }
+        if(location.hash === "#famousParagraph"){
+            console.log("you are visitig famous content");
+        }
+        if(location.hash === "#politicsParagraph"){
+            console.log("you are visitig politics content");
+        }
+    }
+
+    window.onhashchange = locationHashChanged;
+    
+</script>
+<body onhashchange="locationHashChanged()">
+    <ul>
+        <li><a href="#placesParagraph">Places</a></li>
+        <li><a href="#historyParagraph">History</a></li>
+        <li><a href="#famousParagraph">Famous</a></li>
+        <li><a href="#politicsParagraph">Politics</a></li>
+      </ul>
+    
+    <br><br><br><br><br><br><br><br><br><br>
+    <div id="placesParagraph">
+        <h1>This is places paragraph</h1>
+        <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, blanditiis! Reprehenderit suscipit, rem ipsam temporibus dolorum quae quam debitis porro ducimus a sequi vitae consequuntur ea perferendis magni voluptate nobis!
+        </p>
+    </div> 
+    <br><br><br><br><br><br><br><br><br><br>
+    <div id="historyParagraph">
+        <h1>This is history paragraph</h1>
+        <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, blanditiis! Reprehenderit suscipit, rem ipsam temporibus dolorum quae quam debitis porro ducimus a sequi vitae consequuntur ea perferendis magni voluptate nobis!
+        </p>
+    </div> 
+    <br><br><br><br><br><br><br><br><br><br>
+    <div id="famousParagraph">
+        <h1>This is famous paragraph</h1>
+        <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, blanditiis! Reprehenderit suscipit, rem ipsam temporibus dolorum quae quam debitis porro ducimus a sequi vitae consequuntur ea perferendis magni voluptate nobis!
+        </p>
+    </div> 
+    <br><br><br><br><br><br><br><br><br><br>
+    <div id="politicsParagraph">
+        <h1>This is politics paragraph</h1>
+        <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, blanditiis! Reprehenderit suscipit, rem ipsam temporibus dolorum quae quam debitis porro ducimus a sequi vitae consequuntur ea perferendis magni voluptate nobis!
+        </p>
+    </div>  
+    <br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

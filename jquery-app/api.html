@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../bootstrap-app/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="studentservice.js"></script>
+</head>
+
+<style>
+    .form-inline {
+        padding-left: 0%;
+    }
+
+    .loader {
+        border: 5px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 5px solid blue;
+        border-right: 5px solid green;
+        border-bottom: 5px solid red;
+        border-left: 5px solid pink;
+        width: 25px;
+        height: 25px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #studData {
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+
+<script>
+
+    $(document).ready(() => {
+        let studIdToUpdate = "";
+        $("#update").attr("disabled",true);
+        $("#spinner").show();
+        displayData();
+        $("#submit").click(() => {
+
+            let studentObj = createStudentObject();
+
+            saveStudentData(studentObj)
+                .then(function (result) {
+                    console.log(result);
+                    displayData();
+                })
+
+            $("#myform").trigger("reset");
+        })
+
+        $("#update").click(() => {
+            $("#spinner").show();
+            let studentObj = createStudentObject();
+
+            updateStudentData(studIdToUpdate, studentObj)
+                .then(function (result) {
+                    $("#spinner").hide();
+                    displayData();
+                })
+            $("#myform").trigger("reset");
+        })
+
+        function editAndDeleteBtnReady() {
+
+            $(".edit").click(function () {
+                $("#update").attr("disabled",false);
+                $("#submit").attr("disabled",true);
+                $("#spinner").show();
+                //console.log("Id to update:"+this.id);
+                studIdToUpdate = this.id;
+                let id = this.id;
+                fetchStudentData()
+                    .then(function (result) {
+                        $("#spinner").hide();
+                        for (let i = 0; i < result.length; i++) {
+
+                            if (result[i].id == id) {
+                                if (result[i].isMale == true) {
+                                    $("#male").prop("checked", true);
+                                }
+                                else {
+                                    $("#female").prop("checked", true);
+                                }
+                                $("#rollno").val(result[i].rollNo);
+                                $("#name").val(result[i].name);
+                                $("#age").val(result[i].age);
+                                $("#email").val(result[i].email);
+                                $("#date").val(result[i].date);
+
+                            }
+                        }
+                    })
+            })
+            $(".delete").click(function () {
+                if (confirm("do you really want to erase your crucial data")) {
+                    deleteStudentData(this.id)
+                        .then(function (result) {
+                            console.log(result);
+                            displayData();
+                        })
+                }
+
+            })
+        }
+
+
+        function displayData() {
+
+            fetchStudentData()
+                .then(function (result) {
+                    $("#spinner").hide();
+
+                    let studData = "";
+
+                    for (var i = 0; i < result.length; i++) {
+                        let gender = "";
+                        //console.log(result[i].id);
+                        if (result[i].isMale == true) {
+                            gender = "male";
+                        }
+                        else {
+                            gender = "female"
+                        }
+
+                        studData += "<tr>" +
+                            "<td>" + result[i].id + "</td>" +
+                            "<td>" + result[i].name + "</td>" +
+                            "<td>" + result[i].email + "</td>" +
+                            "<td>" + result[i].rollNo + "</td>" +
+                            "<td>" + result[i].age + "</td>" +
+                            "<td>" + result[i].date + "</td>" +
+                            "<td>" + gender + "</td>" +
+                            "<td><button type='button' id=" + result[i].id + " class='edit btn btn-info btn-sm'>" +
+                            "<span class='glyphicon glyphicon-pencil '></span>Edit</button></td>" +
+                            "<td><button type='button'id=" + result[i].id + " class='delete btn btn-danger btn-sm'>" +
+                            "<span class='glyphicon glyphicon-trash'></span>Delete</button></td>" +
+                            "</tr>";
+                    }
+                    $(".badge").text(result.length);
+                    $("#tbody").html(studData);
+                    editAndDeleteBtnReady();
+                })
+        }
+
+        function createStudentObject() {
+            let selected = "";
+            if ($("#male").is(":checked")) {
+                selected = true;
+            }
+            else {
+                selected = false;
+            }
+
+            let newObj = {
+                "rollno": $("#rollno").val(),
+                "name": $("#name").val(),
+                "age": parseInt($("#age").val()),
+                "email": $("#email").val(),
+                "date": $("#date").val(),
+                "isMale": selected
+            }
+
+            return newObj;
+        }
+
+        $("#myform").validate({
+            
+        })
+
+    })
+</script>
+
+<body>
+    <center>
+        <div>
+            <br>
+            Total Number of Students:&nbsp;<span class="badge"></span>
+
+        </div>
+        <form id="myform">
+            <div class="form-inline">
+                <br>
+                <label for="rollno">Roll no:</label>
+                <input type="text" class="form-control" id="rollno"><br><br>
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email"><br><br>
+                <label for="dob">Date:</label>
+                <input type="date" class="form-control" id="date"><br><br>
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age"><br><br>
+                <label for="male">Gender:&nbsp;</label>
+                <label><input type="radio" name="optradio" id="male">Male&nbsp;</label>
+                <label><input type="radio" name="optradio" id="female">Female</label><br>
+                <br><br>
+                <button type="button" class="btn btn-success" id="submit">Add</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-info" id="update">Update</button>
+                <br><br>
+            </div>
+        </form>
+        <div class="loader" id="spinner" style="display: none">
+
+        </div>
+        <div id="studData">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Roll No.</th>
+                        <th>Age</th>
+                        <th>Date</th>
+                        <th>Gender</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+
+    </center>
+
+    </form>
+</body>
+
+</html>

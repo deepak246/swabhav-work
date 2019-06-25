@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            p{
+                text-align: center; /*element selector*/
+                color: blue;
+            }
+            #para1 {                /*id selector*/
+                text-align: center;  
+                color: black;  
+            } 
+            .center {               /*class selector*/
+                text-align: center;  
+                color: red;  
+            }  
+            p.center {              /*Class Selector for specific element*/ 
+                text-align: center;  
+                color: green;  
+            }   
+            * {                    /*Universal Selector*/
+                color: purple;  
+                font-size: 20px;  
+            }
+            h1,h2,p {               /*Group Selector*/
+                text-align: center;  
+                color: blue;  
+            }  
+  
+        </style>
+    </head>
+    <body>
+        <h3>CSS Element Selector</h3>
+        <p>This style will be applied on every paragraph.</p>  
+        <p id="para1">Me too!</p>  
+        <p>And me!</p>  
+        <h3>CSS Id Selector</h3>
+        <p id="para1">ID selector only affects this paragraph</p>  
+        <p>This paragraph will be affected by Element selector.</p>  
+        <h3>CSS Class Selector</h3>
+        <h5 class="center">This heading is affected by class Selector</h5>
+        <p class="center">This paragraph will be affected by class Selector</p>
+        <h3>CSS Class Selector for specific Element</h3>
+        <h5 class="center">This heading is not affected</h5>  
+        <p class="center">only This paragraph is affected.</p>
+    </body>
+</html>

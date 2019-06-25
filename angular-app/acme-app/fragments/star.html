@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Star</title>
+    <link rel="stylesheet" href="../../bootstrap-app/css/bootstrap.min.css">
+    </link>
+    <script src="../../bootstrap-app/js/jquery.min.js"></script>
+    <script src="../../bootstrap-app/js/bootstrap.min.js"></script>
+    <script src="../angular.js"></script>
+    <script src="../angular-route.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/productDataService.js"></script>
+    <script src="app/starController.js"></script>
+    
+</head>
+
+<style>
+    .rating {
+        color: #a9a9a9;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul.rating {
+        display: inline-block;
+    }
+
+    .rating li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 1px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .rating .filled {
+        color: red;
+    }
+</style>
+
+<body ng-app="acme.app">
+    <div ng-controller="starController">
+        <span ng-repeat="rating in ratings">{{rating.current}} out of
+            {{rating.max}}
+            <br>
+            <span class="glyphicon glyphicon-star"></span>
+            <div star-rating rating-value="rating.current" max="rating.max"
+                on-rating-selected="getSelectedRating(rating)"></div>
+        </span>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var f1 = function(){
+                console.log("inside f1");
+            }();
+            console.log(typeof f1);
+
+            (function f2(){
+                console.log("inside f2");
+            })();
+        </script>
+    </body>
+</html>

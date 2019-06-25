@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+<body ng-app="myservice">
+        <div ng-controller="maincontroller">
+            <h3>Check Even</h3>
+            Enter Number: <input type="number" ng-model="no">
+            <button id="genPrime" ng-click="btnclick()">Check Even</button>
+            
+                <p>{{p}}</p>
+            
+        </div>
+    
+    
+</body>
+
+<script>
+    angular.module('myservice', [])
+        .controller('maincontroller', [
+            '$scope', 'mathService',
+            function ($scope, mathService) {
+                $scope.btnclick = function () {
+                    mathService.isEven($scope.no)
+                        .then((r)=>{
+                            console.log(r);
+                            $scope.p = r;
+                        })
+                        .catch((e)=>{
+                            $scope.p = e;
+                        })
+                }
+            }
+        ])
+        .factory('mathService',[
+            '$q',
+            function($q){
+                let obj = {};
+                obj.isEven = function(no){
+                    return $q ((resolve, reject) => {
+                        if(no%2==0){
+                            resolve(true);
+                        }
+                        else{
+                            reject(false);
+                        }
+                    })
+                }
+                return obj;
+            }
+        ])
+</script>
+
+</html>

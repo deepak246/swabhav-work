@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="jquery-3.4.1.js"></script>
+</head>
+
+<script>
+    $(document).ready(() => {
+        $("#txt").keyup(function() {
+            $("#para").text($(this).val().toUpperCase());
+        })
+
+        $("#font").keyup(function() {
+            $("#para").css({ "font-size": "" + $(this).val() + "px" });
+        })
+
+        $("#foreground-select").change(()=>{
+            let fcolor = $("#foreground-select option:selected").text();
+            $("#para").css({ "color": "" + fcolor });
+        })
+
+        $("#background-select").change(() =>{
+            let bcolor = $("#background-select option:selected").text();
+            $("#para").css({ "background-color": "" + bcolor });
+        })
+        
+    })
+</script>
+
+<body>
+
+    Text: <input type="text" id="txt">
+    Font: <input type="number" id="font">
+    <p id="colorforeground"></p>
+    <p id="colorbackground"></p>
+    <p id="para"></p>
+
+
+</body>
+
+<script>
+    let colors = ["red", "green", "blue"];
+
+    function displayForegroundOptions() {
+        let colorsOption = "Foreground color: <select id='foreground-select'><option value='' selected disabled hidden>select</option>";
+        for (var i = 0; i < colors.length; i++) {
+            colorsOption += "<option value='" + i + "'> " + colors[i] + "</option>";
+        }
+        colorsOption += "</select>";
+        document.querySelector("#colorforeground").innerHTML = colorsOption;
+    }
+
+    function displayBackgroundOptions() {
+        let colorsOption = "Background color: <select id='background-select'><option value='' selected disabled hidden>select</option>";
+        for (var i = 0; i < colors.length; i++) {
+            colorsOption += "<option value='" + i + "'> " + colors[i] + "</option>";
+        }
+        colorsOption += "</select>";
+        document.querySelector("#colorbackground").innerHTML = colorsOption;
+    }
+    displayForegroundOptions();
+    displayBackgroundOptions();
+</script>
+
+</html>

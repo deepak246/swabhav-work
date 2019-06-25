@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        var swabhav = {};
+        swabhav.cubeEven = function(num){
+            if(num%2==0){
+                return num*num*num;
+            }
+            else{
+                return "not an even number";
+            }
+        }
+
+        swabhav.isPrime = function(num){
+            for(var i=2;i<num/2;i++){
+                if(num % i == 0){
+                    return "Not prime";
+                }
+                
+            }
+            return "Is prime";
+        }
+
+        console.log(swabhav.cubeEven(2));
+        console.log(swabhav.isPrime(10));
+        
+    </script>
+</html>

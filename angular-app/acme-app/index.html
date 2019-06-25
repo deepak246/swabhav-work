@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Acme-app</title>
+    <link rel="stylesheet" href="../../bootstrap-app/css/bootstrap.min.css">
+    </link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/collection/build/ionicons/svg/ios-star-half.svg">
+    </link>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../../bootstrap-app/js/jquery.min.js"></script>
+    <script src="../../bootstrap-app/js/bootstrap.min.js"></script>
+    <script src="../angular.js"></script>
+    <script src="../angular-route.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/productDataService.js"></script>
+    <script src="app/starController.js"></script>
+    <script src="app/productDetailsController.js"></script>
+    <script src="app/productListController.js"></script>
+    <script src="app/welcomeController.js"></script>
+
+</head>
+<style>
+    .rating {
+        color: #a9a9a9;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul.rating {
+        display: inline-block;
+    }
+
+    .rating li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 1px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .rating .filled {
+        color: red;
+    }
+</style>
+
+<body ng-app="acme.app">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Acme Product Management
+                </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#!/">Home</a></li>
+                <li><a href="#!/productList">Product List</a></li>
+                <li><a href="#!/edit"></a></li>
+            </ul>
+    </nav>
+    <div ng-view>
+
+    </div>
+</body>
+
+</html>

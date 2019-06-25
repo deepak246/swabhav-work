@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+
+<body ng-app="modMain">
+    <div ng-controller="controllerMain">
+        <section>
+            <h1>One way</h1>
+            <div>
+                Name: {{student.name}} <br>
+                cgpa: {{student.cgpa}} <br>
+            </div>
+        </section>
+        <hr>
+        <section>
+            <h1>Two way</h1>
+            Name: <input type="text" ng-model="student.name">
+            cgpa: <input type="text" ng-model="student.cgpa">
+        </section>
+        <hr>
+        <section>
+            <h1>One time</h1>
+            Name: {{ ::student.name}} <br>
+            cgpa: {{ ::student.cgpa}} <br>
+        </section>
+    </div>
+</body>
+<script>
+    angular.module("modMain", [])
+        .controller("controllerMain", function ($scope) {
+            console.log("controller created");
+            $scope.student = {
+                id: 1,
+                name: "deepak",
+                cgpa: 9
+            }
+        })
+
+</script>
+
+</html>

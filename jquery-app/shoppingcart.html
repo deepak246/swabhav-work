@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="products.js"></script>
+</head>
+
+<style>
+    #top-div {
+        text-align: center;
+    }
+
+    .table-div {
+        display: none;
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div id="top-div">
+        <h3>Shopping Cart</h3><br>
+        <div class="selectproduct">
+
+        </div>
+        <div class="table-div">
+            <h3>Cart Products</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+                <div class="final-total">
+                    <h3 id="order-summary"></h3>
+                </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+<script>
+
+    var cart = [];
+    var removebtns;
+
+    function displayOptions() {
+        var productsOption = "Products: <select id='product-select'><option value='' selected disabled hidden>select</option>";
+        for (var i = 0; i < products.length; i++) {
+            productsOption += "<option value='" + i + "'> " + products[i].name + "-" + products[i].price +
+                "</option>";
+        }
+        productsOption += "</select> &nbsp Quantity: <input id='quantity' type='number'> " +
+            "&nbsp <button type='button' id='addtocart'>Add to Cart</button>";
+        document.querySelector(".selectproduct").innerHTML = productsOption;
+    }
+
+    displayOptions();
+    var addtocartbtn = document.querySelector("#addtocart");
+    addtocartbtn.addEventListener('click', function () {
+        var selectedProductId = document.querySelector("#product-select").value;
+        var productQuantity = parseInt(document.querySelector("#quantity").value);
+
+        var productName = products[selectedProductId].name;
+        var productPrice = products[selectedProductId].price;
+        var productId = parseInt(selectedProductId) + 1;
+
+        var lineItem = {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            quantity: productQuantity
+        }
+
+        for (var i = 0; i < cart.length; i++) {
+            if (productId == cart[i].id) {
+                cart[i].quantity += parseInt(productQuantity);
+                displayCart();
+                return;
+            }
+        }
+        cart.push(lineItem);
+        displayCart();
+    });
+
+    function displayCart() {
+        var tbody = document.querySelector("#tbody");
+        document.querySelector(".table-div").style.display = "block";
+        var lineItems = "";
+        for (var i = 0; i < cart.length; i++) {
+            lineItems += "<tr>" +
+                "<td>" + cart[i].id + "</td>" +
+                "<td>" + cart[i].name + "</td>" +
+                "<td>" + cart[i].price + "</td>" +
+                "<td>" + cart[i].quantity + "</td>" +
+                "<td>" + (cart[i].quantity * cart[i].price) + "</td>" +
+                "<td><button class='remove-item' id='" + i + "'>Remove</button></td>" +
+                "</tr>";
+        }
+
+        tbody.innerHTML = lineItems;
+
+        calculateOrderSummary();
+        displayRemovalOption();
+    }
+
+
+    function displayRemovalOption() {
+        removebtns = document.querySelectorAll(".remove-item");
+
+        for (var i = 0; i < cart.length; i++) {
+            removebtns[i].addEventListener('click', function () {
+                cart.splice(this.id, 1);
+                displayCart();
+            });
+        }
+    }
+
+    function calculateOrderSummary() {
+        var finalTotal = 0;
+        for (var i = 0; i < cart.length; i++) {
+            finalTotal += cart[i].price * cart[i].quantity;
+        }
+        document.querySelector("#order-summary").innerHTML = "Order Summary: " + finalTotal + "/-";
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        function makeEmployee(){
+            var emp = {};
+            var _fname, _lname;
+            emp.setFirstName = function(fname){
+                if(fname.length>0){
+                    _fname = fname;
+                }
+            }
+            emp.getFirstName = function(){
+                return "firstname: "+_fname;
+            }
+            emp.setLastName = function(lname){
+                if(lname.length>0){
+                    _lname = lname;
+                }
+            }
+            emp.getLastName = function(){
+                return "lastname: "+_lname;
+            }
+            emp.fullname = function(){
+                return "firstname: "+_fname+" lastname: "+_lname;
+            }
+            return emp;
+        }
+
+        var e1 = makeEmployee();
+        console.log(e1);
+        e1.setFirstName("Abc");
+        e1.setLastName("Bcd");
+        console.log(e1.fullname());
+    </script>
+</html>

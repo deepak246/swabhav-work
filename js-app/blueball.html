@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .wrapper {
+        display: none;
+        text-align: right;
+    }
+
+    .btn {
+        display: none;
+        width: 125px;
+        height: 125px;
+        line-height: 40px;
+        border: 2px solid #f5f5f5;
+        border-radius: 50%;
+        color: #f5f5f5;
+        text-align: center;
+        text-decoration: none;
+        background: #464646;
+        box-shadow: 0 0 3px gray;
+        font-size: 20px;
+        font-weight: bold;
+        float: left;
+        background: peru;
+    }
+
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    .center {
+        text-align: center;
+        display: block;
+    }
+</style>
+
+<body>
+
+    <div class="wrapper">
+        <h3 id="counter"></h3>
+        <h3 id="attempts"></h3>
+    </div>
+
+
+    <div class="center" id="firstpage">
+        <p>BLUEBALL GAME</p>
+        <a class="button" id="start" type="submit">START</a>
+        <br><br><br>
+        <p>RULES<br><br>
+            1. You have to recognize the hidden blue ball.<br>
+            2. You have only 5 attempts.<br>
+            3. Red ball indicates that guessed ball value is lesser than target blue ball value<br>
+            4. Green ball indicates that guessed ball value is higher than target blue ball value<br>
+        </p>
+    </div>
+
+    <script>
+            (function(){
+
+            var singledisp = document.querySelector("#firstpage");
+            singledisp.addEventListener('click',function(){
+                document.querySelector("#firstpage").style.display = "none";
+                var elems = document.getElementsByClassName("btn");
+                var headerdisp = document.getElementsByClassName("wrapper");
+                for(var i = 0; i < elems.length; i++) {
+                    elems[i].style.display = "block";
+                }
+                for(var i = 0; i < headerdisp.length; i++) {
+                    headerdisp[i].style.display = "block";
+                }
+                countdown();
+            });
+
+            function countdown(){
+                var seconds = 60;
+                //console.log(seconds);
+                function tick(){
+                    var counter = document.querySelector("#counter");
+                    seconds--;
+                    counter.innerHTML = "Time Remaining = 0:" + (seconds < 10 ? "0" : "") + String(seconds);
+                    if(seconds>0){
+                        setTimeout(tick,1000);
+                    }
+                    else{
+                        alert("Timeout: Game Over");
+                    }
+                }
+                tick();
+            }
+            let remainingAttempts = 5;
+            var attempts = document.querySelector("#attempts");
+            attempts.innerHTML = "Remaining Attempts = " + remainingAttempts;
+            var docFrag = document.createDocumentFragment();
+            for (var i=1; i <= 50 ; i++){
+                 var elem = document.createElement('button');
+                 elem.setAttribute('id','i');
+                 //elem.setAttribute('value','i');
+                 elem.setAttribute('class','btn');
+                 elem.addEventListener("click",play);
+                 elem.innerHTML=i;
+                 docFrag.appendChild(elem);
+            }
+            document.body.appendChild(docFrag);
+            let randnum = Math.random();
+            let targetNum = Math.floor((randnum/2)*100) ;
+            console.log(targetNum);
+    
+            function play(){
+                var value = this.innerHTML;
+                this.disabled = true;
+                remainingAttempts--;
+                
+                //console.log(remainingAttempts);
+                //console.log(value);
+                if(value>targetNum){
+                    this.style.background = "green";
+                }
+                if(value<targetNum){
+                    this.style.background = "red";
+                }
+                if(value==targetNum){
+                    this.style.background = "blue";
+                    this.innerHTML = "Winner";
+                    var elems = document.getElementsByClassName("btn");
+                    
+                    for(var i = 0; i < elems.length; i++) {
+                        elems[i].disabled = true;
+                    }
+                    setTimeout(returntomain,5000);
+                    alert("YOU WON THE GAME");
+                   
+                }
+    
+                attempts.innerHTML = "Remaining Attempts = " + remainingAttempts;
+                if(remainingAttempts==0){
+                    var elems = document.getElementsByClassName("btn");
+                    
+                    for(var i = 0; i < elems.length; i++) {
+                        elems[i].disabled = true;
+                    }
+                    //document.querySelector(targetNum).innerHTML="YOU LOST";
+                    //document.querySelector("#targetNum").style.background = "blue";
+                    setTimeout(returntomain,5000);
+                    alert("Maximum attempts reached : Game over");
+                }
+            }
+
+            function returntomain(){
+                location.href = "blueball.html";
+            }
+            })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <form name="myform" action="auth.php" method="POST">
+        Username: <input type="text" name="username">
+        <span id="namemsg" style="color: red"></span><br>
+        Password: <input type="password" name="password">
+        <span id="passmsg" style="color: red"></span><br>
+        <input type="submit" name="submit" id="login">
+    </form>
+</body>
+<script>
+    (function () {
+        document.querySelector("#login").addEventListener("click", validateForm);
+        function validateForm() {
+            let name = document.myform.username.value;
+            let password = document.myform.password.value;
+
+            if (name == null || name == "" ) {
+                document.querySelector("#namemsg").innerHTML="required";
+                event.preventDefault();
+            }
+            if(password == null || password==""){
+                document.querySelector("#passmsg").innerHTML="required";
+                event.preventDefault();
+            }
+        }
+    })();
+</script>
+
+</html>

@@ -1,0 +1,39 @@
+<form id="myForm" name="myForm">
+    <div class="form-inline" style="text-align: center">
+        <br>
+        <label for="rollno">Name:</label>
+        <input type="text" class="form-control" name="name" ng-model="name" required>
+        <span class="error" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+            <span ng-show="myForm.name.$error.required">Name is required</span>
+        </span>
+        <br><br>
+        <label for="salary">Salary:</label>
+        <input type="number" class="form-control" name="salary" ng-model="salary" required>
+        <span class="error" ng-show="myForm.salary.$dirty && myForm.salary.$invalid">
+            <span ng-show="myForm.salary.$error.required">Salary is required</span>
+        </span>
+        <br><br>
+        <label for="doj">Date of Join:</label>
+        <input type="text" class="form-control" name="doj" ng-model="doj" required>
+        <span class="error" ng-show="myForm.doj.$dirty && myForm.doj.$invalid">
+            <span ng-show="myForm.doj.$error.required">Date of Join is required</span>
+        </span>
+        <br><br>
+        <label for="designation">Designation</label>
+        <select  ng-model="designation" name="designation" required>
+        <!--    <option value="" selected disabled hidden>select</option> -->
+            <option  value="Analyst">Analyst</option>
+            <option  value="Developer">Developer</option>
+            <option  value="Salesman">Salesman</option>
+        </select>
+        <span class="error" ng-show="myForm.designation.$dirty && myForm.designation.$invalid">
+            <span ng-show="myForm.designation.$error.required"></span>
+        </span>
+        <br><br>
+        <button type="button" class="btn btn-success" name="update" ng-click="updateClicked()" ng-disabled="myForm.name.$invalid || myForm.doj.$invalid || myForm.salary.$invalid ||
+                            myForm.designation.$invalid">
+            Update
+        </button>
+
+    </div>
+</form>

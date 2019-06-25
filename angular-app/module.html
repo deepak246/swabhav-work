@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+
+<script>
+    angular.module('modA', ['modB', 'modC'])
+        .controller('controllerA', function ($scope,$rootScope) {
+            console.log($scope);
+            console.log($rootScope);
+            $scope.msgA = "Hello says controller A";
+        });
+
+    angular.module('modB', [])
+        .controller('controllerB', function ($scope) {
+            $scope.msgB = "Hello says controller B";
+        });
+
+    angular.module('modC', [])
+        .controller('controllerC', function ($scope) {
+            $scope.msgC = "Hello says controller C";
+        });
+</script>
+
+<body ng-app="modA">
+    <div ng-controller="controllerA">
+        {{msgA}}
+    </div>
+    <div ng-controller="controllerB">
+        {{msgB}}
+    </div>
+    <div ng-controller="controllerC">
+        {{msgC}}
+    </div>
+</body>
+
+
+</html>

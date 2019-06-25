@@ -99,15 +99,16 @@ public class Employee {
 		subordinates.add(emp);
 	}
 	
-	public void display() {
+	public String display() {
 		for(int i = 0; i < spaces * level; i++) {
 			System.out.print(" ");
 		}
-		System.out.print("==>");
-		System.out.println("EmpId:"+empId+" Name:"+empName+" designation:"+designation);
+		//System.out.print("==>");
+		System.out.println("<EmpId:"+empId+" Name:"+empName+" designation:"+designation+">");
 		for(Employee employee : this.getSubordinates()) {
 			employee.display();
 		}
+		return "hello";
 	}
 	
 }

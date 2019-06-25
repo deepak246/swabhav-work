@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <style>
+    #loadbtn {
+        display: block;
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        
+    }
+    .placeincenter{
+        text-align: center;
+    }
+    </style>
+    <body>
+        <div class="placeincenter">
+            <button type= "button" id="loadbtn">LOAD</button>
+        </div>
+        
+        <center>
+                <br><br>
+                <iframe id="myframe" style="height: 300px; width: 500px"></iframe>
+        </center>
+        
+    </body>
+    
+    <script>
+        document.querySelector("#loadbtn").addEventListener('click',function(){
+            document.querySelector("#myframe").src = "index.html";
+        })
+    </script>
+
+</html>

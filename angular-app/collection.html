@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <title>Document</title>
+</head>
+
+<body ng-app="modStudent">
+    <center>
+
+        <div ng-controller="controllerStud">
+            <button id="btn" ng-click="toggle()" class="btn btn-success">Load</button><br><br>
+            <h3>Student Info</h3>
+
+            <div ng-repeat="student in students" ng-show="myVar" class="card-body">
+                <div style = "background-color: {{ student.cgpa | cgpafilter}} " >
+                    <span>Student Id: {{ student.id }}</span><br>
+                    <span>Student Name: {{ student.name }}</span><br>
+                    <span>Student CGPA: {{ student.cgpa }}</span><br>
+                    <span>Student Image: </span><br>
+                    <span>
+                        <img ng-src="{{ student.image }}" alt="">
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </center>
+
+</body>
+
+<script>
+    angular.module('modStudent', [])
+        .controller('controllerStud', [
+            '$scope',
+            function ($scope) {
+                $scope.myVar = false;
+                $scope.toggle = function () {
+                    $scope.myVar = !$scope.myVar;
+                    if ($scope.myVar == true) {
+                        $scope.load();
+                    }
+                }
+
+                $scope.load = function () {
+
+                    $scope.students = [
+                        {
+                            id: 1,
+                            name: "deepak",
+                            cgpa: 9.99,
+                            image: "101400.png"
+                        },
+                        {
+                            id: 2,
+                            name: "yogita",
+                            cgpa: 10,
+                            image: "101400.png"
+                        },
+                        {
+                            id: 3,
+                            name: "abhishek",
+                            cgpa: 8,
+                            image: "101400.png"
+                        },
+                        {
+                            id: 4,
+                            name: "shekhar",
+                            cgpa: 5,
+                            image: "101400.png"
+                        },
+                        {
+                            id: 5,
+                            name: "onkar",
+                            cgpa: 9,
+                            image: "101400.png"
+                        }
+
+
+                    ]
+                }
+            }
+
+        ])
+        .filter('cgpafilter', [
+            function () {
+                return function (cgpa) {
+                    console.log("filter")
+                    if (cgpa > 8 && cgpa <= 10) {
+                        //console.log("8")
+                        return "green";
+                    }
+                    if (cgpa < 8 && cgpa >= 5) {
+                        //console.log("6")
+                        return "yellow";
+                    }
+                    return "#FF3333";
+                }
+            }
+        ])
+
+
+</script>
+
+</html>

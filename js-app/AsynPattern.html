@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        var dataService = function(){
+            var obj={};
+            obj.getData = function(){
+                var r = Math.random()*10;
+                return r;
+            }
+            obj.getDataAsyn = function(callback){
+                setTimeout(function(){
+                    var r = Math.random()*100;
+                    callback(r);
+                },0);
+            }
+            obj.getDataCube = function(num, callback){
+                setTimeout(function(){
+                    var r = num*num*num;
+                    callback(r);
+                },0);
+            }
+            return obj;
+        }();
+        var data = dataService.getData();
+
+        dataService.getDataAsyn(function(d){
+            console.log("inside callback");
+            console.log(d);
+            dataService.getDataCube(d,function(d){
+                console.log("inside nested callback");
+                console.log(d);
+            })
+        });
+        console.log(data);
+        console.log("end of script");
+    </script>
+</html>

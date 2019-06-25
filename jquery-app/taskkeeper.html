@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #addbtn {
+        display: block;
+        background-color: #4caf50;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .taskadder {
+        text-align: left;
+        display: block;
+        width: 800px;
+    }
+
+    .updatebtn {
+        text-align: center;
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 1px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <center>
+        <div class="titlebar">
+            <h3>TASK KEEPER</h3><br>
+            <label for="taskdesc">Task:</label>
+            <textarea id="taskdesc" type="text" style="width: 230px; height: 15px;"></textarea><br><br>
+            Priority: <input type="radio" name="choice" value="low">LOW
+            <input type="radio" name="choice" value="medium">MEDIUM
+            <input type="radio" name="choice" value="high">HIGH <br><br>
+            <button id="addbtn">Add</button><br>
+            <p><span id="tasks"></span></p>
+        </div>
+        <div id="taskbtn">
+            <button id="completebtn" class="updatebtn">Complete</button>
+            <button id="deletebtn" class="updatebtn">Delete</button><br><br>
+            SORT: <input type="checkbox" id="lowtohigh" onclick="sortlowtohigh()">Low to High
+            <input type="checkbox" id="hightolow" onclick="sorthightolow()">High to Low
+            <br><br>
+        </div>
+        <div class="taskadder" style="padding-left: 5%">
+            <br>
+        </div>
+        <div class="sortcontrol">
+
+
+        </div>
+    </center>
+    <div id="target">
+
+    </div>
+</body>
+
+<script>
+    var taskArray = [];
+    var taskdesc;
+    var priority;
+    var date;
+    var pending;
+    var testarray = [];
+    var arrayelements = [];
+    var tasks;
+
+    Storage.prototype.pushArrayItem = function (taskArray, taskObject) {
+        var existingArray = this.getArray(taskArray);
+        existingArray.push(taskObject);
+        this.setItem(taskArray, JSON.stringify(existingArray));
+        console.log("stored");
+    }
+
+    Storage.prototype.getArray = function (taskArray) {
+        var thisArray = [];
+        var fetchArrayObject = this.getItem(taskArray);
+        if (typeof fetchArrayObject !== 'undefined') {
+            if (fetchArrayObject !== null) {
+                thisArray = JSON.parse(fetchArrayObject);
+            }
+        }
+        return thisArray;
+    }
+
+    Storage.prototype.popArrayItem = function (arrayName) {
+        var arrayItem = {};
+        var existingArray = this.getArray(arrayName);
+        if (existingArray.length > 0) {
+            arrayItem = existingArray.pop();
+            this.setItem(arrayName, JSON.stringify(existingArray));
+        }
+        return arrayItem;
+    }
+
+    Storage.prototype.deleteArray = function (arrayName) {
+        this.removeItem(arrayName);
+    }
+
+
+    taskDetailsDisplay();
+    var array = localStorage.getArray(taskArray);
+    document.querySelector("#addbtn").addEventListener('click', function () {
+        taskdesc = document.querySelector("#taskdesc").value;
+        date = new Date();
+        pending = true;
+
+        var radios = document.getElementsByName('choice');
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                priority = radios[i].value;
+                radios[i].checked = false;
+                console.log("priority: " + priority);
+                break;
+            }
+        }
+
+        arrayelements = localStorage.getArray(taskArray);
+        id = arrayelements.length + 1;
+
+        var taskObject = {
+            'id': id,
+            'taskdesc': taskdesc,
+            'priority': priority,
+            'pending': pending,
+            'strike': false,
+            'date': date
+        };
+        //var id = taskArray.length;
+        //console.log("ID: "+id);
+
+        //var s1 = new Storage();
+        localStorage.pushArrayItem(taskArray, taskObject);
+
+        taskDetailsDisplay();
+    });
+
+    function taskDetailsDisplay() {
+        var allTasks = "";
+        var array = localStorage.getArray(taskArray);
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: red\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: yellow\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: green\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: green\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: yellow\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: red\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+
+        }
+        document.querySelector(".taskadder").innerHTML = allTasks;
+    }
+
+
+    var checkboxes = document.querySelectorAll(".tick");
+    var completebtn = document.querySelector("#completebtn");
+
+    completebtn.addEventListener('click', function () {
+
+        var array = localStorage.getArray(taskArray);
+
+        for (var j = 0; j < array.length; j++) {
+            if (array[j].pending == false) {
+                continue;
+            }
+            if (document.getElementById("check" + j).checked) {
+                document.getElementById("check" + j).checked = false;
+                var taskline = document.getElementById("label" + j).innerHTML;
+                var label = document.getElementById("label" + j);
+                label.innerHTML = "<strike>" + taskline + "</strike>";
+                array[j].strike = true;
+                localStorage.setItem(taskArray, JSON.stringify(array));
+            }
+        }
+    });
+
+    var deletebtn = document.querySelector("#deletebtn");
+    deletebtn.addEventListener('click', function () {
+
+        var array = localStorage.getArray(taskArray);
+
+        for (var j = 0; j < array.length; j++) {
+            if (array[j].pending == false) {
+                continue;
+            }
+
+            if (document.getElementById("check" + j).checked) {
+                document.getElementById("check" + j).checked = false;
+                array[j].pending = false;
+                localStorage.setItem(taskArray, JSON.stringify(array));
+                taskDetailsDisplay();
+            }
+        }
+    });
+
+    function sortlowtohigh() {
+        document.querySelector("#lowtohigh").checked = false;
+        var allTasks = "";
+        var array = localStorage.getArray(taskArray);
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: green\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: green\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: yellow\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: yellow\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: red\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: red\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+        document.querySelector(".taskadder").innerHTML = allTasks;
+    }
+
+    function sorthightolow() {
+        document.querySelector("#lowtohigh").checked = false;
+        var allTasks = "";
+        var array = localStorage.getArray(taskArray);
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: red\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "high") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: red\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: yellow\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "medium") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: yellow\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+        for (var i = 0; i < array.length; i++) {
+            if (array[i].pending == false) {
+                continue;
+            }
+            if (array[i].strike == true && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" + "<label id=\"label" + i +
+                    "\" style=\"background-color: green\"><strike> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</strike></label>" +
+                    "</li>";
+                continue;
+            }
+            if (array[i].strike == false && array[i].priority == "low") {
+                allTasks += "<li style=\"list-style-type: none\"><input type=\"checkbox\" id=\"check" + i +
+                    "\" class=\"tick\">" +
+                    "<label id=\"label" + i + "\" style=\"background-color: green\"> Task:" + array[i].taskdesc +
+                    " Priority:" + array[i].priority + "</label>" +
+                    "</li>";
+                continue;
+            }
+        }
+        document.querySelector(".taskadder").innerHTML = allTasks;
+    }
+</script>
+
+</html>

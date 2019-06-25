@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+
+<body ng-app="myservice">
+    <div ng-controller="primenocontroller">
+        <h3>Generate Prime</h3>
+        Enter Number: <input type="number" ng-model="no">
+        <button id="genPrime" ng-click="btnclick()">Generate Prime</button>
+        <div ng-repeat="p in primes">
+            <p>{{p}}</p>
+        </div>
+    </div>
+    <div ng-controller="evencontroller">
+        <h3>Generate Even</h3>
+        Enter Number: <input type="number" ng-model="no">
+        <button id="genEven" ng-click="btnclick()">Generate Even</button>
+        <div ng-repeat="e in evens">
+                <p>{{e}}</p>
+        </div>
+    </div>
+</body>
+<script>
+
+    angular.module('myservice', [])
+        .controller('primenocontroller', [
+            '$scope', 'mathService',
+            function ($scope, $mathService) {
+                $scope.btnclick = function () {
+                    console.log("clicked prime");
+                    $scope.primes = $mathService.generatePrime($scope.no);
+                }
+            }
+        ])
+        .controller('evencontroller', [
+            '$scope', 'mathService',
+            function ($scope, $mathService) {
+                $scope.btnclick = function () {
+                    console.log("clicked even");
+                    $scope.evens = $mathService.generateEven($scope.no);
+                }
+
+            }
+        ])
+        .factory('mathService', [
+            '$log',
+            function ($log) {
+                $log.info("In mathService");
+                var obj = {};
+                obj.generatePrime = function (no) {
+                    let primeArray = [];
+                    let flag;
+                    for (let i = 2; i <= no; i++) {
+                        flag = 0;
+                        for (let j = 2; j <= i / 2; j++) {
+                            if (i % j == 0) {
+                                flag = 1;
+                                break;
+                            }
+                        }
+                        if (flag == 0) {
+                            primeArray.push(i);
+                        }
+                    }
+                    return primeArray;
+                }
+
+                obj.generateEven = function (no) {
+                    let evenArray = [];
+                    for (let i = 0; i <= no; i++) {
+                        if (i % 2 == 0) {
+                            evenArray.push(i);
+                        }
+                    }
+                    return evenArray;
+                }
+                return obj;
+            }
+        ])
+
+</script>
+
+</html>

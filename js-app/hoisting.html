@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            function f1(){
+                for(var i = 1;i <= 10;i++){
+                    console.log("value of i = "+i);
+                }
+                console.log("after for loop value of i = "+i);
+            }
+            f1();
+            //console.log("after function value of i = "+i);
+            f2();
+            function f2(){                      //statement
+                console.log("inside f2");
+            }
+            f2();
+            //f3();
+            var f3 = function(){                //expression 
+                console.log("inside f3");
+            }
+            f3();
+        </script>
+    </body>
+</html>

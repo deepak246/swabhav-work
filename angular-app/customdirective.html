@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Custom Directives</title>
+</head>
+
+<script>
+    let mainApp = angular.module("mainApp", []);
+
+    mainApp.directive('aurionproHeader', function () {
+        let directive = {};
+        //directive.restrict = 'E';
+        directive.template = "<h1>This is {{company.name}} header</h1>";
+        return directive;
+    })
+
+    mainApp.directive('aurionproFooter', function () {
+        let directive = {};
+        //directive.restrict = 'E';
+        directive.template = "<h1>This is {{company.name}} footer</h1>";
+        return directive;
+    })
+
+    mainApp.controller('mainController',[
+        '$scope',
+        function($scope){
+            $scope.companies = [];
+            let company2 = {
+                "name": "swabhav"
+            }
+            $scope.companies.push(company2);
+            let company1 = {
+                "name": "AurionPro"
+            }
+            $scope.companies.push(company1);
+        }
+    ])
+
+</script>
+
+<body ng-app = "mainApp">
+    <div ng-controller="mainController">
+        <h1>Custom Directives Example</h1>
+        <aurionpro-Header ng-repeat="company in companies"></aurionpro-Header>
+        <aurionpro-Footer ng-repeat="company in companies"></aurionpro-Footer>
+    </div>
+
+</body>
+
+</html>

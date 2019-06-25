@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <script src="event.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body ng-app="modStudent">
+    <center>
+
+        <div ng-controller="controllerStud">
+            <button id="btn" ng-click="load()" class="btn btn-default">Load</button><br><br>
+            <h3>Student Info</h3>
+            <span>Student Id: {{ student.id }}</span><br>
+            <span>Student Name: {{ student.name }}</span><br>
+            <span>Student CGPA: {{ student.cgpa }}</span><br>
+            <span>Student Image: </span><br>
+            <span>
+                <img ng-src="{{ student.image }}" alt="">
+            </span>
+        </div>
+    </center>
+
+</body>
+
+
+</html>

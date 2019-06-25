@@ -6,6 +6,7 @@ import com.techlabs.organization.business.Employee;
 import com.techlabs.organization.dataaccess.DiskLoader;
 import com.techlabs.organization.dataaccess.WebLoader;
 import com.techlabs.organization.service.HierarchyBuilder;
+import com.techlabs.organization.service.HierarchyMap;
 
 public class TestOrganization {
 	
@@ -18,6 +19,7 @@ public class TestOrganization {
 
 		HierarchyBuilder hb = new HierarchyBuilder(diskLoader);
 		hb.displayHierarchy();
+		
 	}
 
 }
