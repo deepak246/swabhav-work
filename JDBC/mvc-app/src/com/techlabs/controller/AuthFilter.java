@@ -12,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import com.techlabs.service.CustomerService;
+
 /**
  * Servlet Filter implementation class AuthFilter
  */
@@ -39,12 +41,14 @@ public class AuthFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		PrintWriter out = response.getWriter();
-
 		if (req.getParameterNames().hasMoreElements()) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-
-			if (username.equals("admin") && password.equals("admin")) {
+			
+			String usernameExpected = CustomerService.getInstance().getUsername("admin");
+			String passwordExpected = CustomerService.getInstance().getPassword("admin");
+			
+			if (username.equals(usernameExpected) && password.equals(passwordExpected)) {
 				chain.doFilter(request, response);
 			} else {
 				out.println("Invalid Credentials");

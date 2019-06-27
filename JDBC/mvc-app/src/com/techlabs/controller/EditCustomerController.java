@@ -22,7 +22,7 @@ import com.techlabs.service.CustomerService;
 public class EditCustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CardType card;
-	private String id;
+	private int id;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -39,7 +39,7 @@ public class EditCustomerController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		id = request.getParameter("id");
+		id = Integer.parseInt(request.getParameter("id"));
 		Customer customer = CustomerService.getInstance().getCustomerById(id);
 		request.setAttribute("editCustomer", customer);
 		RequestDispatcher view = request.getRequestDispatcher("editCustomer.jsp");
@@ -67,6 +67,7 @@ public class EditCustomerController extends HttpServlet {
 			customer.setCard(card);
 			customer.setBalance(balance);
 			customer.setDob(dob);
+			CustomerService.getInstance().editCustomer(id, customer);
 			out.println("Customer Updated Successfully");
 			return;
 		}

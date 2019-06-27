@@ -5,13 +5,14 @@ import java.util.UUID;
 public class Customer {
 	private String firstname, lastname, dob;
 	private double balance;
-	private String id;
+	private int id;
 	private CardType card;
 	
-	public Customer(String firstname, String lastname, String dob,
+	public Customer(int id,String firstname, String lastname, String dob,
 			 double balance, CardType card) {
 		System.out.println("customer created");
-		this.id = UUID.randomUUID().toString();
+		//this.id = UUID.randomUUID().toString();
+		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.dob = dob;
@@ -55,12 +56,12 @@ public class Customer {
 		return balance;
 	}
 
-	public String getId() {
-		return id;
-	}
-
 	public CardType getCard() {
 		return card;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }

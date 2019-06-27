@@ -61,8 +61,9 @@ public class AddCustomerController extends HttpServlet {
 			card = card.DEBIT;
 		}
 
-		Customer customer = new Customer(firstname, lastname, dob, balance, card);
+		Customer customer = new Customer(101,firstname, lastname, dob, balance, card);
 		CustomerService.getInstance().addCustomers(customer);
+		
 		out.println("Customer Added Successfully");
 
 	}

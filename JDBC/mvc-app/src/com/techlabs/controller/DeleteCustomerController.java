@@ -20,7 +20,7 @@ import com.techlabs.service.CustomerService;
 @WebServlet("/DeleteCustomerController")
 public class DeleteCustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String id;
+	private int id;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -38,7 +38,7 @@ public class DeleteCustomerController extends HttpServlet {
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 
-		id = request.getParameter("id");
+		id = Integer.parseInt(request.getParameter("id"));
 		CustomerService.getInstance().deleteCustomerById(id);
 		out.println("customer deleted");
 	}

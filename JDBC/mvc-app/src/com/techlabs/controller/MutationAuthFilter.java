@@ -44,7 +44,7 @@ public class MutationAuthFilter implements Filter {
 		
 		if(req.getParameter("id")!=null) {
 			System.out.println("id = "+req.getParameter("id"));
-			url = url + "?id=" + req.getParameter("id");
+			url = url + "?id=" + Integer.parseInt(req.getParameter("id"));
 		}
 		HttpSession session = req.getSession();
 		if(!session.getAttribute("username").equals("")) {

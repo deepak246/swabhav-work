@@ -70,3 +70,47 @@ create table lineitem
 insert into lineitem values (1,5,2,1);
 insert into lineitem values (2,3,3,1);
 select * from lineitem;
+
+
+create table customers
+(
+	id int primary key AUTO_INCREMENT,
+	firstname varchar(20),
+	lastname varchar(20),
+	dob varchar(20),
+	balance double,
+	cardtype varchar(20)
+);
+
+insert into customers values (1,'deepak','gupta','2/4/1990',2000,'CREDIT');
+insert into customers (firstname,lastname,dob,balance,cardtype) values ('yogita','more','2/8/1990',200,'DEBIT');
+insert into customers (firstname,lastname,dob,balance,cardtype) values ('abhishek','londhe','24/9/1990',200,'CREDIT');
+
+
+
+create table users
+(
+	id int primary key,
+	username varchar(20),
+	pwd varchar(20),
+	role varchar(20)
+);
+
+insert into users values (1,'admin','admin','admin');
+
+select * from users;
+
+create table vendor
+(
+	id int primary key,
+	name varchar(20),
+	balance double
+);
+
+insert into vendor values(101,'DMart',500000);
+
+select * from vendor;
+select * from customers;
+
+
+

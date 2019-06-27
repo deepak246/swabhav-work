@@ -7,8 +7,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Customer</title>
+
 </head>
 <body>
+
 	<%
 		List<Customer> customers = (List) request.getAttribute("customers");
 		out.print("<table>");
