@@ -1,0 +1,23 @@
+<section>
+    <div style="text-align: center">
+        <h2>BLUEBALL GAME</h2>
+        <div *ngIf="display">
+            <button (click)='startTimer()' class="btn btn-success">Start </button>
+
+            <h3>RULES</h3> <br>
+            1. You have to recognize the hidden blue ball.<br>
+            2. You have only 5 attempts.<br>
+            3. Red ball indicates that guessed ball value is lesser than target blue ball value<br>
+            4. Green ball indicates that guessed ball value is higher than target blue ball value<br>
+        </div>
+
+        <h3>Remaining Attempts: {{remainingAttempts}}</h3>
+        <h3>Time Left: {{timeLeft}} Seconds Left....</h3>
+
+        <input type="button" *ngFor="let item of fiftyArray(50); let i = index" value="{{i+1}}"
+            [style.background-color]="btnColor[i+1]" [style.border-radius]="'50%'" [style.height]="'125px'"
+            [style.width]="'125px'" [style.border-style]="'none'" style="font-size: 50px;" (click)="btnClicked(i+1)"
+            [disabled]='disableBtn'>
+
+    </div>
+</section>

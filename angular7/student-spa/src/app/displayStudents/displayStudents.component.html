@@ -1,0 +1,49 @@
+<style>
+    th,
+    td {
+        text-align: center;
+    }
+</style>
+
+<div>
+    <h3 style="text-align: center">Students Data</h3>
+    <h4 style="text-align: center"> Total Students: {{resultLength}}</h4>
+    <h4>Search:  <input type="text" [(ngModel)]="searchText"></h4>
+    <br><br>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ROLL NO</th>
+                <th>NAME</th>
+                <th>AGE</th>
+                <th>EMAIL</th>
+                <th>DATE</th>
+                <th>GENDER</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let s of result | searchPipe: {name: searchText}; let i=index;'>
+                <td>{{s.id}}</td>
+                <td>{{s.rollNo}}</td>
+                <td>{{s.name}}</td>
+                <td>{{s.age}}</td>
+                <td>{{s.email}}</td>
+                <td>{{s.date}}</td>
+                <td>{{s.isMale | genderPipe}}</td>
+                <td>
+                    <button class="glyphicon glyphicon-pencil btn btn-warning" [routerLink]="['/edit',s.id]">
+                    </button>
+                </td>
+                <td>
+                    <button class="glyphicon glyphicon-trash btn btn-danger" (click)="deleteStudent(s.id)">
+
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

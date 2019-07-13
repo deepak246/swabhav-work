@@ -1,0 +1,17 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Angular-SPA</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a [routerLink]="'home'">Home</a></li>
+        <li><a [routerLink]="'about'">About</a></li>
+        <li><a [routerLink]="'career'">Career</a></li>
+        <li><a [routerLink]="['careerWithParam','101']">CareerWithParam</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,71 @@
+<div>
+
+    <h3 style="text-align: center">Add Student</h3>
+
+    <form id="myForm" name="myForm" #myForm="ngForm">
+        <div align='center'>
+            <div class="form-inline">
+                <br>
+                <label for="rollno">Roll no:</label>
+                <input type="text" #roll="ngModel" class="form-control" name="rollNo" [(ngModel)]="rollNo" required>
+                <span *ngIf="roll.invalid && (roll.dirty || roll.touched)" class="alert alert-danger">
+
+                    <span *ngIf="roll.errors.required">
+                        Roll No is required.
+                    </span>
+                </span>
+                <br><br>
+                <label for="name">Name:</label>
+                <input type="text" name="sname" class="form-control" #sname="ngModel" [(ngModel)]="name" required>
+                <span *ngIf="sname.invalid && (sname.dirty || sname.touched)" class="alert alert-danger">
+
+                    <span *ngIf="sname.errors.required">
+                        Name is required.
+                    </span>
+                </span>
+                <br><br>
+                <label for="email">Email:</label>
+                <input type="email" #mail="ngModel" class="form-control" name="email" [(ngModel)]="email" required>
+                <span *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="alert alert-danger">
+                    <span *ngIf="mail.errors.required">
+                        Email is required.
+                    </span>
+                </span>
+                <br><br>
+                <label for="date">Date:</label>
+                <input type="date" #sdate="ngModel" class="form-control" name="date" [(ngModel)]="date" required>
+                <span *ngIf="sdate.invalid && (sdate.dirty || sdate.touched)" class="alert alert-danger">
+                    <span *ngIf="sdate.errors.required">
+                        Date is required.
+                    </span>
+                </span>
+                <br><br>
+                <label for="age">Age:</label>
+                <input type="number" #sage="ngModel" class="form-control" name="age" [(ngModel)]="age" required>
+                <span *ngIf="sage.invalid && (sage.dirty || sage.touched)" class="alert alert-danger">
+                    <span *ngIf="sage.errors.required">
+                        Age is required.
+                    </span>
+                </span>
+                <br><br>
+                <label for="male">Gender:&nbsp;&nbsp;</label>
+                <label><input type="radio" #sgender="ngModel" name="gender" id="male" [(ngModel)]="gender" value="true"
+                        required>Male&nbsp;&nbsp;</label>
+                <label><input type="radio" #sgender="ngModel" name="gender" id="female" [(ngModel)]="gender"
+                        value="false" required>Female</label>
+                <span *ngIf="sgender.invalid && (sgender.dirty || sgender.touched)" class="alert alert-danger">
+                    <span *ngIf="sgender.errors.required">
+                        Gender is required.
+                    </span>
+                </span>
+                <br><br>
+
+            </div>
+            <button type="button" [disabled]="myForm.form.invalid" class="btn btn-success" name="add" (click)="addData()">
+                Add
+            </button>&nbsp;&nbsp;
+            <br>
+        </div>
+    </form>
+
+</div>

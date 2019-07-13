@@ -1,0 +1,7 @@
+<section>
+<br>
+<h4>Enter any number:</h4><br>
+<input type="number" [ngModel]='no' (ngModelChange)="getNumFacts($event)"><br>
+
+<h3>Result is : {{result | SnakeCasePipe }}</h3>
+</section>

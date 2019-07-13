@@ -1,0 +1,36 @@
+<section>
+    <div>
+        <input type="button" (click)="loadCourses($event)" value="Load Courses"><br><br>
+        <ul>
+            <li *ngFor='let c of courses'>
+                course id: {{c.courseId}} <br>
+                course name: {{c.courseName}} <br>
+                course fees: {{c.fees}}
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h1>Two way Binding</h1>
+        
+        <input type="text" [ngModel]='student.name' (ngModelChange)='nameChange($event)'><br>
+        <input type="text" [(ngModel)]='student.name'><br>
+        {{student.name}}
+    </div>
+    <div>
+        name is: {{student.name}} <br>
+        cgpa: {{student.cgpa}} <br>
+        location: {{student.location}} <br>
+        profile pic: <br> <img src="{{student.profilePic}}"> <br><br>
+    </div>
+    <div>
+        name: {{student['name']}} <br>
+        cgpa: {{student['cgpa']}} <br>
+        location is: <p [innerHtml] = 'student.location' ></p><br>
+        profile pic: <br> <img [src]="student.profilePic" [style.height]="'100px'"> <br><br>
+    </div>
+
+    <div>
+        <h3>Style Binding</h3>
+        CGPA: <p [innerHtml]='student.cgpa' [style.background-color]="convertCgpaToColor()"></p>
+    </div>
+</section>

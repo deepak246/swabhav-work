@@ -113,4 +113,23 @@ select * from vendor;
 select * from customers;
 
 
+create table bank_master(
+name varchar(20) primary key,
+password varchar(20),
+balance double 
+);
 
+CREATE TABLE bank_transaction(
+name VARCHAR(20), 
+DATE DATE, 
+type VARCHAR(20),
+amount DOUBLE, 
+foreign key(name) references bank_master(name)
+);
+
+select * from bank_master;
+select * from bank_transaction;
+
+SELECT PASSWORD FROM BANK_MASTER WHERE NAME="deepak";
+
+select * from candidate;

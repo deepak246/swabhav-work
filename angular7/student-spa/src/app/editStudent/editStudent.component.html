@@ -1,0 +1,40 @@
+
+<div>
+
+    <h3 style="text-align: center">Update Student</h3>
+
+    <form id="myForm" name="myForm">
+        <div align='center'>
+        <div class="form-inline">
+            <br>
+            <label for="rollno">Roll no:</label>
+            <input type="text" class="form-control" name="rollNo" [(ngModel)]="student.rollNo" required>
+
+            <br><br>
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="student.name" required>
+
+            <br><br>
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="student.email" required>
+            <br><br>
+            <label for="date">Date:</label>
+            <input type="date" class="form-control" name="date" [(ngModel)]="student.date" required>
+            <br><br>
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" name="age" [(ngModel)]="student.age" required>
+            <br><br>
+            <label for="male">Gender:&nbsp;&nbsp;</label>
+            <label><input type="radio" name="gender"  [(ngModel)]="student.isMale" value="true"
+                >Male&nbsp;&nbsp;</label>
+            <label><input type="radio" name="gender"  [(ngModel)]="student.isMale" value="false"
+                >Female</label>
+            <br><br>
+
+        </div>
+        <button type="button" class="btn btn-success" name="add" (click)="updateData()">
+            Update
+        </button>&nbsp;&nbsp;
+        <br>
+    </div>
+    </form>

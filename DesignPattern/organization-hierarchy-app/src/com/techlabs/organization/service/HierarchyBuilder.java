@@ -77,21 +77,21 @@ public class HierarchyBuilder {
 
 	public void displayHierarchy() {
 		findCEO();
-		generateXMLFile();
+//		generateXMLFile();
 		//CEO.display();
 	}
 	
-	public void generateXMLFile() {
-		File file = new File("data\\OrganizationHierarchy.txt");
-		try {
-			FileOutputStream fos = new FileOutputStream(file);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			Writer w = new BufferedWriter(osw);
-			String text = CEO.display();
-			w.write(text);
-		}catch(IOException e){
-			System.out.println("error");
-		}		
-	}
+//	public void generateXMLFile() {
+//		File file = new File("data\\OrganizationHierarchy.txt");
+//		try {
+//			FileOutputStream fos = new FileOutputStream(file);
+//			OutputStreamWriter osw = new OutputStreamWriter(fos);
+//			Writer w = new BufferedWriter(osw);
+//			String text = CEO.display();
+//			w.write(text);
+//		}catch(IOException e){
+//			System.out.println("error");
+//		}		
+//	}
 
 }
