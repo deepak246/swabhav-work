@@ -1,22 +1,28 @@
 package com.techlabs.crud;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.techlabs.entity.Candidate;
+import com.techlabs.entity.Employee;
 
 public class CandidateCRUD {
 
 	public static void main(String[] args) {
-		// getCandidate(1);
-		// deleteCandidate();
-		updateCandidate();
+		System.out.println("==============candidate details===============");
+		// getCandidates();
+		deleteCandidate(2);
+		System.out.println("==============candidate deleted===============");
+		System.out.println("==============candidate details===============");
+		// getCandidates();
+		//updateCandidate(2);
 	}
 
-	private static void updateCandidate() {
+	private static void updateCandidate(int id) {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory factory = cfg.buildSessionFactory();
@@ -25,14 +31,35 @@ public class CandidateCRUD {
 		Session session = factory.openSession();
 		Transaction transaction = session.beginTransaction();
 
-		Query query = session.createQuery("update Candidate set name = :Name1" + " where name = :Name2");
-		query.setParameter("Name1", "Deepak");
-		query.setParameter("Name2", "Shekhar");
-		int result = query.executeUpdate();
+		Employee candidate = (Employee) session.get(Employee.class, id);
+		candidate.setName("Sweety Rajput");
+		System.out.println("Updated Successfully");
+		session.getTransaction().commit();
+		//sessionFactory.close();
 	}
 
-	public static Candidate getCandidate(long id) {
-		Candidate c = null;
+	public static void getCandidates() {
+		// Candidate c = null;
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate.cfg.xml");
+		SessionFactory factory = cfg.buildSessionFactory();
+
+		Session session = factory.openSession();
+
+		// c = (Candidate) session.get(Candidate.class, id);
+
+		Query query = session.createQuery("from Candidate");
+
+		List<Employee> candidates = query.list();
+		for (Employee c : candidates) {
+			System.out.print("id = " + c.getId());
+			System.out.print(" name = " + c.getName());
+			System.out.print(" cgpa = " + c.getCgpa());
+			System.out.println();
+		}
+	}
+
+	public static void deleteCandidate(int id) {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
 		SessionFactory factory = cfg.buildSessionFactory();
@@ -41,26 +68,10 @@ public class CandidateCRUD {
 		Session session = factory.openSession();
 		Transaction transaction = session.beginTransaction();
 
-		c = (Candidate) session.get(Candidate.class, id);
+		Employee candidate = (Employee) session.load(Employee.class, id);
+		session.delete(candidate);
+		session.getTransaction().commit();
 
-		System.out.println("id = " + c.getId());
-		System.out.println("name = " + c.getName());
-		System.out.println("cgpa = " + c.getCgpa());
-		return c;
-	}
-
-	public static void deleteCandidate() {
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		SessionFactory factory = cfg.buildSessionFactory();
-		System.out.println(factory.getClass());
-
-		Session session = factory.openSession();
-		Transaction transaction = session.beginTransaction();
-
-		Query query = session.createQuery("delete from Candidate where id=1");
-		// specifying class name (Emp) not tablename
-		query.executeUpdate();
 		System.out.println("deleted successfully ");
 	}
 }

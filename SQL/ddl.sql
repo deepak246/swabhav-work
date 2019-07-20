@@ -133,3 +133,10 @@ select * from bank_transaction;
 SELECT PASSWORD FROM BANK_MASTER WHERE NAME="deepak";
 
 select * from candidate;
+
+select * from department;
+select * from employee;
+
+
+
+
